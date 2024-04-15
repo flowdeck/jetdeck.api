@@ -6,7 +6,8 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   rules: {
     // 'no-unused-vars': 'warn',
-    '@typescript-eslint/no-unused-vars': 'warn', // Override to warning here
+    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
   // overrides: [
   //   {
