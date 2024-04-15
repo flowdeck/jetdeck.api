@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Jetdeck API",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "npm run lint -- --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -19,6 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
     "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
