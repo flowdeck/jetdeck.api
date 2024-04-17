@@ -47,6 +47,9 @@ export const register = async (req: express.Request, res: express.Response) => {
     //* NOTE - createUser is a function that takes a user object and returns a new user object (it doesn't save the user to the database)
     const newUser = await createUser(user)
 
+    //* Save the user to the database
+    newUser.save()
+
     // Validate the user was created
     if (!newUser || !newUser._id) {
       // Handle failed user creation
