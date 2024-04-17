@@ -5,11 +5,16 @@ import cookieParser from 'cookie-parser'
 import compression from 'compression'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+
+import router from './router'
+import { randomUser, authentication } from './helpers/index'
 
 const app = express()
 const port = 8090
 
-const myStaticValue = '100'
+//* Init DotEnv
+dotenv.config()
 
 app.use(
   cors({
@@ -21,10 +26,14 @@ app.use(compression())
 app.use(cookieParser())
 app.use(bodyParser.json())
 
+app.get('/', (req, res) => {
+  res.json('Jetdeck API Root')
+})
+
 // Define the route for GET requests to "/users"
 app.get('/users', (req, res) => {
-  const users = ['user1', 'user2']
-  res.json(users)
+  //* TODO
+  //res.json(authentication('1234567890', '7070'))
 })
 
 const server = http.createServer(app)
@@ -37,7 +46,7 @@ server.listen(port, () => {
 const dbConfig = {
   HOST: '127.0.0.1',
   PORT: 27017,
-  DB: 'flowdeck',
+  DB: 'jetdeck',
 }
 
 const MongoURL = `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`
@@ -48,3 +57,5 @@ mongoose.connect(MongoURL).then(() => {
 })
 
 mongoose.connection.on('error', (error: Error) => console.log(error))
+
+app.use('/', router())
