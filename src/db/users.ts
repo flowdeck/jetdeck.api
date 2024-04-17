@@ -18,8 +18,9 @@ export const getUserByUsername = (username: string) => UserModel.findOne({ usern
 
 export const getUserBySessionToken = (sessionToken: string) =>
   UserModel.findOne({
-    'authentication.sessiontToken': sessionToken,
+    'authentication.sessionToken': sessionToken,
   })
+
 export const getUserById = (id: string) => UserModel.findById(id)
 
 export const createUser = (values: Record<string, any>) => new UserModel(values)
