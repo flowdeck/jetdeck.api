@@ -8,7 +8,6 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 
 import router from './router'
-import { randomUser, authentication } from './helpers/index'
 
 const app = express()
 const port = 8090
@@ -33,7 +32,6 @@ app.get('/', (req, res) => {
 // Define the route for GET requests to "/users"
 app.get('/users', (req, res) => {
   //* TODO
-  //res.json(authentication('1234567890', '7070'))
 })
 
 const server = http.createServer(app)
