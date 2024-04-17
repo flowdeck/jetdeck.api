@@ -6,7 +6,7 @@ export const randomUser = () => {
 
 export const random = () => crypto.randomBytes(128).toString('base64')
 
-export const authentication = (salt: string, password: string) => {
+export const getHashedPassword = (salt: string, password: string) => {
   if (!process.env.SECRET) {
     throw new Error('Missing environment variable: SECRET')
   }
