@@ -25,15 +25,6 @@ app.use(compression())
 app.use(cookieParser())
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => {
-  res.json('Jetdeck API Root')
-})
-
-// Define the route for GET requests to "/users"
-app.get('/users', (req, res) => {
-  //* TODO
-})
-
 const server = http.createServer(app)
 
 server.listen(port, () => {
