@@ -4,13 +4,11 @@
   "description": "Jetdeck API",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "dev": "tsnd --respawn src/app.ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:fix": "npm run lint -- --fix"
   },
-  "author": "",
+  "author": "Flowdeck",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",

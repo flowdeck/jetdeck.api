@@ -1,26 +1,12 @@
 {
   "compilerOptions": {
-    //* If specified, .js (as well as .d.ts, .js.map, etc.) files will be emitted into this directory
     "outDir": "build",
-
-    //* Set the JavaScript language version for emitted JavaScript and include compatible library declarations.
     "target": "es5",
-
-    //* Specify what module code is generated.
     "module": "commonjs",
-    //* Enable importing .json files
     "resolveJsonModule": true,
-
-    //* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility.
     "esModuleInterop": true,
-
-    //* Ensure that casing is correct in imports.
     "forceConsistentCasingInFileNames": true,
-
-    //* Enable error reporting for expressions and declarations with an implied `any` type..
-    "strict": true /* Enable all strict type-checking options. */,
-
-    //* Skip type checking all .d.ts files.
+    "strict": true,
     "skipLibCheck": true
   }
 }
