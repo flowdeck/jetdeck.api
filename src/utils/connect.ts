@@ -1,18 +1,19 @@
 import mongoose from 'mongoose'
 import config from 'config'
+import logger from './logger'
 
-function connect() {
+function connectToDb() {
   const dbUri = config.get<string>('server.dbUri')
 
   return mongoose
     .connect(dbUri)
     .then(() => {
-      console.log('Connected to the database')
+      logger.info('Connected to the MongoDB')
     })
     .catch((error) => {
-      console.error('Error connecting to the database: ', error)
+      logger.error('Error connecting to the MongoDB: ', error)
       process.exit(1)
     })
 }
 
-export default connect
+export default connectToDb

@@ -1,7 +1,8 @@
 import express from 'express'
 import config from 'config'
-import connect from '../src/utils/connect'
+import connectToDb from '../src/utils/connect'
 import logger from '../src/utils/logger'
+import routes from '../src/routes'
 
 //* Create a new express application instance
 const app = express()
@@ -10,7 +11,11 @@ const app = express()
 const port = config.get<number>('server.port')
 
 app.listen(port, async () => {
-  logger.info(`Server is running on http://localhost:${port}`)
+  logger.info(`API Listening: ${port}`)
 
-  await connect()
+  //* Connect to the database
+  await connectToDb()
+
+  //* Load routes
+  routes(app)
 })
