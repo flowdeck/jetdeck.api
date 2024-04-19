@@ -3,4 +3,7 @@ export default {
     port: 8090,
     dbUri: 'mongodb://localhost:27017/jetdeck',
   },
+  auth: {
+    saltWorkFactor: 10,
+  },
 }
