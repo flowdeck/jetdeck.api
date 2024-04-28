@@ -1,17 +1,23 @@
 import User from '../models/user.model.mjs'
+import jwt from 'jsonwebtoken'
 
 // handle errors
 const handleErrors = (err) => {
-  console.log(err.message, err.code)
-  let errors = { username: '', password: '' }
+  let errors = []
+
+  // incorrect username or password
+  if (err.message === 'invalid_credentials') {
+    errors.push({ message: 'Incorrect username or password' })
+  }
 
   // duplicate username error
   if (err.code === 11000) {
-    errors.username = 'that username is already registered'
+    errors.username = 'That username is already registered'
     return errors
   }
 
-  // validation errors
+  //* validation errors
+  //TODO
   if (err.message.includes('user validation failed')) {
     // console.log(err);
     Object.values(err.errors).forEach(({ properties }) => {
@@ -24,6 +30,14 @@ const handleErrors = (err) => {
   return errors
 }
 
+// create json web token
+const maxAge = 3 * 24 * 60 * 60
+const createToken = (id) => {
+  return jwt.sign({ id }, 'net ninja secret', {
+    expiresIn: maxAge,
+  })
+}
+
 const authController = {}
 
 authController.signup_post = async (req, res) => {
@@ -31,7 +45,9 @@ authController.signup_post = async (req, res) => {
 
   try {
     const user = await User.create({ username, password })
-    res.status(201).json(user)
+    const token = createToken(user._id)
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
+    res.status(201).json({ user: user._id })
   } catch (err) {
     const errors = handleErrors(err)
     res.status(400).json({ errors })
@@ -39,10 +55,17 @@ authController.signup_post = async (req, res) => {
 }
 
 authController.login_post = async (req, res) => {
-  const { username, password } = req.body
+  const credentials = req.body
 
-  console.log(username, password)
-  res.send('user login')
+  try {
+    const user = await User.authenticate(credentials)
+    const token = createToken(user._id)
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
+    res.status(200).json({ user: user._id })
+  } catch (err) {
+    const errors = handleErrors(err)
+    res.status(400).json({ errors })
+  }
 }
 
 export default authController
