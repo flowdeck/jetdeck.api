@@ -1,4 +1,3 @@
 ## TODO
 
-Look into this, may be a cleaner architecture
-https://www.youtube.com/watch?v=TbT7eO1fxuI&t=891s
+https://www.youtube.com/watch?v=SnoAwLP1a-0&list=PL4cUxeGkcC9iqqESP8335DA5cRFp8loyp&index=2
