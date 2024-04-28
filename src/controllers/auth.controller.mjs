@@ -1,5 +1,9 @@
 import User from '../models/user.model.mjs'
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+// Load environment variables
+dotenv.config()
 
 // handle errors
 const handleErrors = (err) => {
@@ -33,7 +37,7 @@ const handleErrors = (err) => {
 // create json web token
 const maxAge = 3 * 24 * 60 * 60
 const createToken = (id) => {
-  return jwt.sign({ id }, 'net ninja secret', {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: maxAge,
   })
 }

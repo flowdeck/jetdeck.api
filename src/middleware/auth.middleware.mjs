@@ -1,4 +1,8 @@
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+// Load environment variables
+dotenv.config()
 
 //require auth
 const requireAuth = (req, res, next) => {
@@ -6,7 +10,7 @@ const requireAuth = (req, res, next) => {
 
   // check json web token exists & is verified
   if (token) {
-    jwt.verify(token, 'net ninja secret', (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
       if (err) {
         console.log(err.message)
         return res.status(401).json({ message: 'Unauthorized' }) // Return 401 with error message
@@ -28,7 +32,7 @@ const populateUser = async (req, res, next) => {
   if (token) {
     try {
       // Verify the JWT token using a secret key
-      const decodedToken = await jwt.verify(token, 'net ninja secret')
+      const decodedToken = await jwt.verify(token, process.env.JWT_SECRET)
 
       // Find the user associated with the decoded token ID
       const user = await User.findById(decodedToken.id)
