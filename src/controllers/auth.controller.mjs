@@ -1,25 +1,48 @@
-const authController = {}
+import User from '../models/user.model.mjs'
 
-authController.signup_post = (req, res) => {
-  // Implement your signup logic here
-  res.send('Signup successful!') // Replace with appropriate response
+// handle errors
+const handleErrors = (err) => {
+  console.log(err.message, err.code)
+  let errors = { username: '', password: '' }
+
+  // duplicate username error
+  if (err.code === 11000) {
+    errors.username = 'that username is already registered'
+    return errors
+  }
+
+  // validation errors
+  if (err.message.includes('user validation failed')) {
+    // console.log(err);
+    Object.values(err.errors).forEach(({ properties }) => {
+      // console.log(val);
+      // console.log(properties);
+      errors[properties.path] = properties.message
+    })
+  }
+
+  return errors
 }
 
-authController.login_post = (req, res) => {
-  const { email, password } = req.body
+const authController = {}
 
-  try{
-    if (!email || !password) {
-      throw new Error('Email and password are required!')
-    }
-  }
-  catch (err) {
-    res.status(400).send(err.message)
-    return
-  }
+authController.signup_post = async (req, res) => {
+  const { username, password } = req.body
 
-  // Implement your login logic here
-  res.send('User logged in!') // Replace with appropriate response
+  try {
+    const user = await User.create({ username, password })
+    res.status(201).json(user)
+  } catch (err) {
+    const errors = handleErrors(err)
+    res.status(400).json({ errors })
+  }
+}
+
+authController.login_post = async (req, res) => {
+  const { username, password } = req.body
+
+  console.log(username, password)
+  res.send('user login')
 }
 
 export default authController
