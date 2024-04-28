@@ -68,4 +68,12 @@ authController.login_post = async (req, res) => {
   }
 }
 
+authController.logout_get = (req, res) => {
+  // Clear the JWT cookie
+  res.cookie('jwt', '', { maxAge: 1 })
+
+  // Respond with a 200 (OK) status code indicating successful logout
+  res.status(200).json({ message: 'Successfully logged out' })
+}
+
 export default authController

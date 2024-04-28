@@ -20,4 +20,33 @@ const requireAuth = (req, res, next) => {
   }
 }
 
-export default requireAuth
+// Check for and store authenticated user information
+const populateUser = async (req, res, next) => {
+  // Check if a JWT token is present in cookies
+  const token = req.cookies.jwt
+
+  if (token) {
+    try {
+      // Verify the JWT token using a secret key
+      const decodedToken = await jwt.verify(token, 'net ninja secret')
+
+      // Find the user associated with the decoded token ID
+      const user = await User.findById(decodedToken.id)
+
+      // Store the user object (if found) in response locals
+      res.locals.user = user
+    } catch (error) {
+      console.error('Error verifying JWT token:', error.message)
+      // Set user to null on verification error
+      res.locals.user = null
+    }
+  } else {
+    // No token found, set user to null
+    res.locals.user = null
+  }
+
+  // Continue processing the request (next middleware or route handler)
+  next()
+}
+
+export { requireAuth, populateUser }

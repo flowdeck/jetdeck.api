@@ -2,7 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import authRoutes from './routes/auth.routes.mjs'
 import cookieParser from 'cookie-parser'
-import requireAuth from './middleware/auth.middleware.mjs'
+import { requireAuth, populateUser } from './middleware/auth.middleware.mjs'
 
 const app = express()
 
@@ -42,6 +42,8 @@ async function startServer() {
 startServer()
 
 // routes
+app.get('*', populateUser)
+
 app.get('/', (req, res) => {
   res.send('Jetdeck API Root')
 })
