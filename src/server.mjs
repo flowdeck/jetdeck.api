@@ -1,15 +1,7 @@
-// const express = require('express')
-// const mongoose = require('mongoose')
-// const authRoutes = require('./routes/auth.routes')
-
 import express from 'express'
 import mongoose from 'mongoose'
 import authRoutes from './routes/auth.routes.mjs'
-// import { authRoutes } from './routes/auth.routes'
-// import * as authRoutes from './routes/auth.routes'
-// import * as authRoutes from './routes/auth.routes.mjs'
-
-// import * as authRoutes from './routes/auth.routes.mjs'
+import cookieParser from 'cookie-parser'
 
 const app = express()
 
@@ -20,6 +12,7 @@ const port = 8090
 //* Middleware
 app.use(express.static('public'))
 app.use(express.json()) //* Parse JSON bodies
+app.use(cookieParser()) //* Parse cookies
 
 // view engine
 // app.set('view engine', 'ejs');
