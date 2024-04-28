@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import authRoutes from './routes/auth.routes.mjs'
 import cookieParser from 'cookie-parser'
+import requireAuth from './middleware/auth.middleware.mjs'
 
 const app = express()
 
@@ -43,6 +44,11 @@ startServer()
 // routes
 app.get('/', (req, res) => {
   res.send('Jetdeck API Root')
+})
+
+//* Authenticated route
+app.get('/dashboard', requireAuth, (req, res) => {
+  res.send('Authenticated route: Dashboard')
 })
 
 //* Import and mount the routes
