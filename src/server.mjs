@@ -55,15 +55,10 @@ app.get('/', (req, res) => {
   res.send('Jetdeck API Root')
 })
 
-// app.get('/get_jwt', (req, res) => {
-//   console.log('GET /get_jwt')
-//   res.send('GET /get_jwt')
-// })
-
-// //* Authenticated route
-// app.get('/dashboard', requireAuth, (req, res) => {
-//   res.send('Authenticated route: Dashboard')
-// })
+//* Authenticated route
+app.get('/dashboard', requireAuth, (req, res) => {
+  res.send('Authenticated route: Dashboard')
+})
 
 //* Import and mount the routes
 app.use('/auth', authRoutes)

@@ -84,7 +84,7 @@ authController.login = async (req, res) => {
     const token = createToken(user._id)
 
     // Return JWT in the payload now
-    res.status(200).json({ jwtToken: token, user: user._id })
+    res.status(201).json({ token: token, userId: user._id })
   } catch (errObj) {
     const errResp = handleErrorObj(errObj)
     //Invalid username or password (401 Unauthorized)

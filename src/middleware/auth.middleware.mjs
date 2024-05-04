@@ -4,24 +4,27 @@ import dotenv from 'dotenv'
 // Load environment variables
 dotenv.config()
 
-//require auth
 const requireAuth = (req, res, next) => {
-  const token = req.cookies.jwt
+  // 1. Get Authorization Header
+  const authHeader = req.headers.authorization
 
-  // check json web token exists & is verified
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
-      if (err) {
-        console.error(err.message)
-        return res.status(401).json({ message: 'Unauthorized' }) // Return 401 with error message
-      } else {
-        req.user = decodedToken // Attach decoded user information to request (optional)
-        next()
-      }
-    })
-  } else {
-    return res.status(401).json({ message: 'Unauthorized' }) // Return 401 if no token exist
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided' })
   }
+
+  // 2. Extract Token (Assuming Bearer scheme)
+  const token = authHeader.split(' ')[1] // Bearer <token>
+
+  // 3. Verify Token
+  jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+    if (err) {
+      console.error(err.message)
+      return res.status(401).json({ message: 'Unauthorized: Invalid token' })
+    } else {
+      req.user = decodedToken // Attach user to request
+      next()
+    }
+  })
 }
 
 // Check for and store authenticated user information
