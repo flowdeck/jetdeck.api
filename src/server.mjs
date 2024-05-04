@@ -1,8 +1,9 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import authRoutes from './routes/auth.routes.mjs'
 import cookieParser from 'cookie-parser'
+import authRoutes from './routes/auth.routes.mjs'
 import { requireAuth, populateUser } from './middleware/auth.middleware.mjs'
+import cors from 'cors'
 
 const app = express()
 
@@ -15,8 +16,14 @@ app.use(express.static('public'))
 app.use(express.json()) //* Parse JSON bodies
 app.use(cookieParser()) //* Parse cookies
 
-// view engine
-// app.set('view engine', 'ejs');
+const corsOptions = {
+  origin: ['http://localhost:8080'], //* Allow requests from this origin
+  credentials: true, //* Include cookies in requests (if applicable)
+  allowedHeaders: ['Content-Type', 'Authorization'], //* Allowed headers
+  methods: 'GET,POST,OPTIONS,PUT,DELETE', //* Allowed methods
+}
+
+app.use(cors(corsOptions))
 
 async function startServer() {
   try {
@@ -48,10 +55,15 @@ app.get('/', (req, res) => {
   res.send('Jetdeck API Root')
 })
 
-//* Authenticated route
-app.get('/dashboard', requireAuth, (req, res) => {
-  res.send('Authenticated route: Dashboard')
-})
+// app.get('/get_jwt', (req, res) => {
+//   console.log('GET /get_jwt')
+//   res.send('GET /get_jwt')
+// })
+
+// //* Authenticated route
+// app.get('/dashboard', requireAuth, (req, res) => {
+//   res.send('Authenticated route: Dashboard')
+// })
 
 //* Import and mount the routes
 app.use('/auth', authRoutes)
