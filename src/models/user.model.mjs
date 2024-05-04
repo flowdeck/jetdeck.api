@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Password is required'],
-    minlength: [6, 'Minimum password length is 6 characters'],
+    minlength: [4, 'Minimum password length is 6 characters'],
   },
 })
 
@@ -24,9 +24,12 @@ userSchema.pre('save', async function (next) {
 
 //* authenticate credentials and return user
 userSchema.statics.authenticate = async function (credentials) {
+  //* Avoid revealing specific error
+  const defaultErrorMessage = 'Username or password is incorrect'
+
   //* Validate input
   if (!credentials || !credentials.username || !credentials.password) {
-    throw new Error('invalid_credentials')
+    throw new Error(defaultErrorMessage)
   }
 
   //* Destructure username and password for readability
@@ -37,7 +40,7 @@ userSchema.statics.authenticate = async function (credentials) {
 
   //* Handle user not found gracefully
   if (!foundUser) {
-    throw new Error('invalid_credentials') // Avoid revealing specific error
+    throw new Error(defaultErrorMessage)
   }
 
   //* Compare password using a secure hashing algorithm (bcrypt)
@@ -45,7 +48,7 @@ userSchema.statics.authenticate = async function (credentials) {
 
   //* Handle invalid password
   if (!isPasswordValid) {
-    throw new Error('invalid_credentials') // Avoid revealing specific error
+    throw new Error(defaultErrorMessage)
   }
 
   // Return the authenticated user object
