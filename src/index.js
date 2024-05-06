@@ -1,8 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
-import authRoutes from './routes/auth.routes.mjs'
-import airportRoutes from './routes/airport.routes.mjs'
+import authRoutes from './routes/auth.routes.js'
+import airportRoutes from './routes/airport.routes.js'
 import { requireAuth, populateUser } from './middleware/auth.middleware.mjs'
 import cors from 'cors'
 
