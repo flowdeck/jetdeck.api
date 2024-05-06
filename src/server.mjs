@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import authRoutes from './routes/auth.routes.mjs'
+import airportRoutes from './routes/airport.routes.mjs'
 import { requireAuth, populateUser } from './middleware/auth.middleware.mjs'
 import cors from 'cors'
 
@@ -62,3 +63,4 @@ app.get('/dashboard', requireAuth, (req, res) => {
 
 //* Import and mount the routes
 app.use('/auth', authRoutes)
+app.use('/', requireAuth, airportRoutes)
