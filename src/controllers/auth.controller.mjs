@@ -1,8 +1,6 @@
 import User from '../models/user.model.mjs'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import { expressjwt } from 'express-jwt'
-import mongoose, { mongo } from 'mongoose'
 
 // Load environment variables
 dotenv.config()
@@ -16,13 +14,6 @@ const handleErrorObj = (errObj) => {
     return { errorMessage: 'An error occurred' }
   }
 }
-
-// Modified middleware for token extraction
-const authMiddleware = expressjwt({
-  secret: process.env.JWT_SECRET,
-  algorithms: ['HS256'],
-  getToken: (req) => req.headers.authorization?.split(' ')[1],
-})
 
 // create json web token
 const maxAge = 3 * 24 * 60 * 60
