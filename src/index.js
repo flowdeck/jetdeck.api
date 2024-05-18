@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import authRoutes from './routes/auth.routes.js'
 import airportRoutes from './routes/airport.routes.js'
-import { requireAuth, populateUser } from './middleware/auth.middleware.mjs'
+import { requireAuth, populateUser } from './middleware/auth.middleware.js'
 import cors from 'cors'
 
 const app = express()

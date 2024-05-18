@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import airportController from '../controllers/airport.controller.mjs'
+import airportController from '../controllers/airport.controller.js'
 
 const router = Router()
 
