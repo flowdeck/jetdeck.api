@@ -16,7 +16,7 @@ airportController.getAirports = async (req, res, searchTerm) => {
     const query = searchTerm ? { name: { $regex: new RegExp('^' + searchTerm, 'i') } } : {} // If no searchTerm, query all airports
 
     // Return specific fields
-    const airports = await Airport.find(query).select('id icao iata name city state')
+    const airports = await Airport.find(query).select('id icao iata name city state').limit(20) // Limit to 20 results
 
     res.status(200).json(airports)
   } catch (error) {
