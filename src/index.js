@@ -9,7 +9,8 @@ import cors from 'cors'
 const app = express()
 
 //* Constants
-const dbURI = 'mongodb://localhost:27017/jetdeck'
+const dbURI = process.env.MONGODB_URI
+
 const port = 8090
 
 //* Middleware
