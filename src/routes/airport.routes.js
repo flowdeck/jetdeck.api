@@ -3,9 +3,9 @@ import airportController from '../controllers/airport.controller.js'
 
 const router = Router()
 
-const returnMochError = true
+const returnMockError = false
 
-if (returnMochError) {
+if (returnMockError) {
   router.get('/airports', (req, res) => {
     // Simulate an error scenario
     const mockError = {
