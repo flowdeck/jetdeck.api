@@ -1,3 +1,13 @@
+/**
+ * Seeds the database with an admin user.
+ *
+ * This script is intended to be run from the project root using the command:
+ *
+ *   npm run seedUser
+ *
+ * It assumes a .env file in the project root with the MONGODB_URI environment variable.
+ */
+
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import User from '../src/models/user.model.js'
