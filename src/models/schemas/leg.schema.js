@@ -11,7 +11,7 @@ const legSchema = new mongoose.Schema({
   },
   desiredDepartureDateTime: {
     type: Date,
-    // Consider adding validation for valid date/time
+    //TODO - Add validation for valid date/time
   },
   departureTimeOfDay: {
     // If they haven't specified a precise time
