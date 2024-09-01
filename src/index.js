@@ -3,51 +3,48 @@ import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import authRoutes from './routes/auth.routes.js'
 import airportRoutes from './routes/airport.routes.js'
+import ticketRoutes from './routes/ticket.routes.js' // Import the ticket routes
 import { requireAuth, populateUser } from './middleware/auth.middleware.js'
 import cors from 'cors'
 
 const app = express()
 
-//* Constants
+// Constants
 const dbURI = process.env.MONGODB_URI
-
 const port = 8090
 
-//* Middleware
+// Middleware
 app.use(express.static('public'))
-app.use(express.json()) //* Parse JSON bodies
-app.use(cookieParser()) //* Parse cookies
+app.use(express.json())
+app.use(cookieParser())
 
 const corsOptions = {
-  origin: ['http://localhost:8080'], //* Allow requests from this origin
-  credentials: true, //* Include cookies in requests (if applicable)
-  allowedHeaders: ['Content-Type', 'Authorization'], //* Allowed headers
-  methods: 'GET,POST,OPTIONS,PUT,DELETE', //* Allowed methods
+  origin: ['http://localhost:8080', 'https://app.flowdeck.com'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: 'GET,POST,OPTIONS,PUT,DELETE',
 }
 
 app.use(cors(corsOptions))
 
 async function startServer() {
   try {
-    //* Connect to MongoDB
     await mongoose.connect(dbURI, {})
     console.log('Connected to MongoDB')
 
-    //* Start the server
     app.listen(port, (err) => {
       if (err) {
         console.error('Error in server setup:', err)
-        return //* Exit early on error
+        return
       }
       console.log('Server listening on Port', port)
     })
   } catch (err) {
     console.error('Error starting server:', err)
-    process.exit(1) //* Exit the process with an error code
+    process.exit(1)
   }
 }
 
-//* Start the server
 startServer()
 
 // routes
@@ -57,11 +54,11 @@ app.get('/', (req, res) => {
   res.send('Jetdeck API Root')
 })
 
-//* Authenticated route
 app.get('/dashboard', requireAuth, (req, res) => {
   res.send('Authenticated route: Dashboard')
 })
 
-//* Import and mount the routes
+// Import and mount the routes
 app.use('/auth', authRoutes)
+app.use('/tickets', ticketRoutes)
 app.use('/', requireAuth, airportRoutes)
