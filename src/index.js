@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import authRoutes from './routes/auth.routes.js'
 import airportRoutes from './routes/airport.routes.js'
-import ticketRoutes from './routes/ticket.routes.js' // Import the ticket routes
+import ticketRoutes from './routes/ticket.routes.js'
+import scheduledTransactionRoutes from './routes/_Finance/scheduledTransactions.routes.js'
 import { requireAuth, populateUser } from './middleware/auth.middleware.js'
 import cors from 'cors'
 
@@ -51,7 +52,7 @@ startServer()
 app.get('*', populateUser)
 
 app.get('/', (req, res) => {
-  res.send('Jetdeck API Root')
+  res.send('Flowdeck.Finance API Root')
 })
 
 app.get('/dashboard', requireAuth, (req, res) => {
@@ -61,4 +62,6 @@ app.get('/dashboard', requireAuth, (req, res) => {
 // Import and mount the routes
 app.use('/auth', authRoutes)
 app.use('/tickets', ticketRoutes)
+// app.use('/credit-schedule', CreditScheduleRoutes)
 app.use('/', requireAuth, airportRoutes)
+app.use('/scheduled-transactions', scheduledTransactionRoutes)
