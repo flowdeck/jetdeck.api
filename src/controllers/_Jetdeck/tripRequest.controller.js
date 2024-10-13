@@ -1,4 +1,4 @@
-import TripRequest from '../models/tripRequest.model.js'
+import TripRequest from '../../models/tripRequest.model.js'
 
 const tripRequestController = {}
 

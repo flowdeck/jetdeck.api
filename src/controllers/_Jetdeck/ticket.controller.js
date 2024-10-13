@@ -1,4 +1,4 @@
-import Ticket from '../models/tickets/ticket.model.js'
+import Ticket from '../../models/tickets/ticket.model.js'
 
 const ticketController = {}
 

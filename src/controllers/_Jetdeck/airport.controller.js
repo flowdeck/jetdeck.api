@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import Airport from '../models/airport.model.js'
+import Airport from '../../models/airport.model.js'
 
 // Load environment variables
 dotenv.config()
